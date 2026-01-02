@@ -23,17 +23,16 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
     
     int i = 1;
     g.push_back(gap[0]);
-    int cnt = 0;
+    int cnt = 1;
     
     while (i < n)
     {
         if (g.back() < gap[i])
         {
-            cnt++;
             answer.push_back(cnt);
             g.push_back(gap[i]);
             i++;
-            cnt = 0;
+            cnt = 1;
         }
         else
         {
@@ -41,6 +40,6 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
             i++;
         }
     }
-    answer.push_back(cnt+1);
+    answer.push_back(cnt);
     return answer;
 }
