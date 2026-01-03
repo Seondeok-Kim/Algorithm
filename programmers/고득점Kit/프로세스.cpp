@@ -13,7 +13,6 @@ int solution(vector<int> priorities, int location) {
     // 실행된 프로세스의 인덱스를 담는 벡터
     vector<int> exe;
     
-    
     while (priorities.empty() != true)
     {
         int first = priorities.front();
