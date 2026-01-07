@@ -2,8 +2,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-// A_len은 배열 A의 길이입니다.
-// B_len은 배열 B의 길이입니다.
 int cmp_asc(const void *a, const void *b)
 {
     int x = *(int*)a;
