@@ -23,3 +23,30 @@ char* solution(int n) {
     answer[idx] = '\0';
     return answer;
 }
+
+
+
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* solution(int n) {
+    char* answer = (char*)malloc(3*n+1);  // 멀티바이트
+    char* p = answer;
+    for(int i = 0 ; i < n ; ++i)
+    {
+        if(i % 2 == 0)
+        {
+            strcpy(p,"수");
+        }
+        else
+        {
+            strcpy(p,"박");
+        }
+        p += 3;
+    }
+    p = '\0';
+    return answer;
+}
