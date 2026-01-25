@@ -3,61 +3,75 @@
 #include <stdlib.h>
 #include <string.h>
 
+// 1. 이진수에서 0 제거 후 전체 길이 반환
+int remove_zero(char *s)
+{
+    int len = strlen(s);
+    int cnt = 0; // 1의 개수 카운트
+    for(int i = 0 ; s[i] != '\0' ; ++i)
+    {
+        if(s[i] == '1')
+        {
+            cnt++;
+        }
+    }
+    return cnt;
+}
+
+// 2. 이진 변환
+char* translate_to_bin(int n)
+{
+    if(n == 0)
+    {
+        char* bin = (char*)malloc(2);
+        bin[0] = '0';
+        bin[1] = '\0';
+        return bin;
+    }
+    char tmp[32];
+    int idx = 0;
+    
+    while(n > 0)
+    {
+        tmp[idx++] = (n % 2) + '0'; // 3
+        n = n / 2;
+    }
+    
+    char* bin = (char*)malloc(idx + 1);
+    
+    for(int i = 0 ; i < idx ; i++)
+    {
+        bin[i] = tmp[idx-1-i];
+    }
+    bin[idx] = '\0';
+    
+    return bin;
+}
 
 int* solution(const char* s) {
- 
     int* answer = (int*)malloc(sizeof(int) * 2);
     
-    // 문자열 s 길이
-    int len = (int)strlen(s);
-    // 제거할 0의 개수
-    int cnt_zero = 0;
-    // 문자열 s를 변환할 거니까
-    char *cur = (char*)malloc(len + 1);
-    strcpy(cur,s);
-    // 이진 변환 횟수
-    int cnt_convert = 0;
+    char *cur = (char*)malloc(strlen(s) + 1);
+    strcpy(cur, s);
 
-    while(!(len == 1 && cur[0] == '1'))
+    int zero_cnt = 0; // 제거한 0 총합
+    int try_cnt = 0; // 변환 횟수
+    
+    while(strcmp(cur,"1") != 0)
     {
-        int one_this = 0;
-        int zero_this = 0;
-        // step1: cur의 모든 0을 제거
-        for(int i = 0 ; i < len ; ++i)
-        {
-            if(cur[i]  == '0')
-            {
-                zero_this++;
-            }
-            else
-            {
-                one_this++;
-            }
-        }
-        cnt_zero += zero_this; 
-        // 남은 1의 개수
-        int cnt_one = one_this;
-        char buf[32];
-        int idx = 0;
-        // step2: 0을 제거한 문자열의 길이를 2진수로 변환
-        while(cnt_one > 0)
-        {
-            buf[idx++] = (cnt_one % 2) + '0';
-            cnt_one /= 2;
-        }
+        int len = strlen(cur);
+        
+        int ones = remove_zero(cur);
+        zero_cnt += len - ones;
+        
+        char* next = translate_to_bin(ones);
         free(cur);
-        cur = (char*)malloc(idx + 1);
-
-        for(int i = 0 ; i < idx ; ++i)
-        {
-            cur[i] = buf[idx - 1 - i];
-        }
-        cur[idx] = '\0';
-        len = idx;
-        cnt_convert++;
+        cur = next;
+        try_cnt++;
     }
-    free(cur);
-    answer[0] = cnt_convert;
-    answer[1] = cnt_zero;
+    
+    answer[0] = try_cnt;
+    answer[1] = zero_cnt;
+    
     return answer;
 }
