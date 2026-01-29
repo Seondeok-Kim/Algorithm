@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+// n을 k진법 문자열로 변환
 char* convert(int n, int k)
 {
     char* tmp = (char*)malloc(20 + 1);
@@ -35,7 +35,7 @@ char* convert(int n, int k)
     return result;
 }
 
-
+// 문자열 0 기준으로 파싱해서 long long 배열로
 long long* parse_by_zero(char* str, int* out_len)
 {
     int len = strlen(str);
@@ -65,6 +65,7 @@ long long* parse_by_zero(char* str, int* out_len)
     return nums;
 }
 
+// 소수 판별
 bool find_prime(long long n)
 {
     int flag = true;
