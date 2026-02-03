@@ -18,3 +18,30 @@ int* solution(long long n) {
     
     return answer;
 }
+
+
+
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+int* solution(long long n) {
+    long long a = n;
+    int cnt = 0;
+    
+    while(a > 0)
+    {
+        a = a / 10;
+        cnt++;
+    }
+    
+    int* answer = (int*)malloc(sizeof(int) * cnt);
+    for(int i = 0 ; i < cnt ; ++i)
+    {
+        answer[i] = (n % 10) ;
+        n = n/10;
+    }
+    
+    return answer;
+}
