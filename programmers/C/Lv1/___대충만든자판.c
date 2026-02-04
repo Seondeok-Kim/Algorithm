@@ -25,7 +25,7 @@ int* solution(const char* keymap[], size_t keymap_len, const char* targets[], si
     }
     
     int *answer = (int*) malloc(sizeof(int) * targets_len);
-    if(!answer) return NULL;
+    if(answer == NULL) return NULL;
     for(int i = 0 ; i < targets_len; ++i)
     {
         const char *t = targets[i];
