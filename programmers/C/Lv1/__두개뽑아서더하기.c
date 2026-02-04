@@ -61,3 +61,67 @@ int* solution(int numbers[], size_t numbers_len) {
     
     return answer;
 }
+
+
+
+
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+int cmp_asc(const void* a, const void* b)
+{
+    const int x = *(const int*) a;
+    const int y = *(const int*) b;
+    if(x > y) return 1;
+    if(x < y) return -1;
+    return 0;
+}
+
+
+int* solution(int numbers[], size_t numbers_len) {
+    int cnt = 0;
+    // 전체 조합 개수
+    for(int i = numbers_len - 1 ; i > 0 ; --i)
+    {
+        cnt += i;
+    }
+    // 중복 제거
+    int* answer = (int*)malloc(sizeof(int) * cnt);
+    // 중복 포함
+    int* tmp = (int*)malloc(sizeof(int) * cnt);
+    // numbers 길이가 2라면
+    if(numbers_len == 2)
+    {
+        answer[0] = numbers[0] + numbers[1];
+        return answer;
+    }
+    else // numbers 길이가 3 이상
+    {
+        int n = 0;
+        for(int i = 0 ; i < numbers_len ; ++i)
+        {
+            for(int j = i + 1 ; j < numbers_len ; ++j)
+            {
+                tmp[n] = numbers[i] + numbers[j];
+                n++;
+            }
+        }
+        // 정렬 (중복됨)
+        qsort(tmp, cnt, sizeof(int), cmp_asc);
+        answer[0] = tmp[0];
+        int idx = 1; // 중복 제거 인덱스
+        
+        for(int i = 1 ; i < cnt-1 ; ++i)
+        {
+            if(tmp[i-1] != tmp[i])
+            {
+                answer[idx] = tmp[i];
+                idx++;
+            }
+        }
+        if(tmp[cnt-2] != tmp[cnt-1]) answer[idx] = tmp[cnt-1];
+    }
+    return answer;
+}
