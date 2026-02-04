@@ -12,7 +12,7 @@ int* solution(const char* keymap[], size_t keymap_len, const char* targets[], si
     }
     for(int i = 0 ; i < keymap_len ; ++i)
     {
-        const char *km = keymap[i];
+        const char *km = keymap[i]; // 문자열 시작주소 가리키는 포인터
         for(int j = 0 ; km[j] != '\0' ; ++j)
         {
             int idx = km[j] - 'A';
@@ -28,7 +28,7 @@ int* solution(const char* keymap[], size_t keymap_len, const char* targets[], si
     if(answer == NULL) return NULL;
     for(int i = 0 ; i < targets_len; ++i)
     {
-        const char *t = targets[i];
+        const char *t = targets[i]; // 문자열 시작주소 가리키는 포인터
         int sum = 0;
         bool possible = true;
         
