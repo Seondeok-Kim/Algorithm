@@ -34,38 +34,37 @@ int solution(const char*** book_time, size_t book_time_rows, size_t book_time_co
     qsort(time, book_time_rows , sizeof(int*), cmp_asc);
 
     // 가장 빨리 비는 방을 관리
-    for(int i = 1 ; i < book_time_rows ; ++i)
+
+    int rooms[1000]; // 방 종료시간 저장 배열
+    int roomCount = 0; // 필요한 객실 수
+    for(int i = 0 ; i < book_time_rows; i++)
     {
-        int rooms[1000]; // 방 종료시간 저장 배열
-        int roomCount = 0;
-        for(int i = 0 ; i < book_time_rows; i++)
+        int start = time[i][0];
+        int end = time[i][1];
+
+        int minIdx = -1;
+        int minEnd = 1000000;
+
+        for(int r = 0 ; r < roomCount; r++)
         {
-            int start = time[i][0];
-            int end = time[i][1];
-            
-            int minIdx = -1;
-            int minEnd = 1000000;
-            
-            for(int r = 0 ; r < roomCount; r++)
+            if(rooms[r] < minEnd)
             {
-                if(rooms[r] < minEnd)
-                {
-                    minEnd = rooms[r];
-                    minIdx = r;
-                }
-            }
-            
-            if(minIdx != -1 && minEnd <= start)
-            {
-                rooms[minIdx] = end;
-            }
-            else
-            {
-                rooms[roomCount++] = end;
+                minEnd = rooms[r];
+                minIdx = r;
             }
         }
-    
+
+        if(minIdx != -1 && minEnd <= start)
+        {
+            rooms[minIdx] = end;
+        }
+        else
+        {
+            rooms[roomCount++] = end;
+        }
     }
+    
+    
     answer = roomCount;
     return answer;
 }
