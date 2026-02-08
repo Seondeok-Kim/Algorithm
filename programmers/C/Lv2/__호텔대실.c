@@ -35,16 +35,17 @@ int solution(const char*** book_time, size_t book_time_rows, size_t book_time_co
 
     // 가장 빨리 비는 방을 관리
 
-    int rooms[1000]; // 방 종료시간 저장 배열
+    int rooms[1000]; // 현재 사용 중인 방들의 종료시간 목록
     int roomCount = 0; // 필요한 객실 수
     for(int i = 0 ; i < book_time_rows; i++)
     {
-        int start = time[i][0];
-        int end = time[i][1];
+        int start = time[i][0]; // 현재 예약의 시작 
+        int end = time[i][1]; // 현재 예약의 종료
 
+        // room 배열에서 종료기간이 가장 작은 방 찾기
         int minIdx = -1;
         int minEnd = 1000000;
-
+    
         for(int r = 0 ; r < roomCount; r++)
         {
             if(rooms[r] < minEnd)
@@ -53,14 +54,14 @@ int solution(const char*** book_time, size_t book_time_rows, size_t book_time_co
                 minIdx = r;
             }
         }
-
+        // 재사용 가능한지 판단
         if(minIdx != -1 && minEnd <= start)
         {
-            rooms[minIdx] = end;
+            rooms[minIdx] = end; // 그 방의 종료시 새 예약의 종료시간으로 바꿈
         }
         else
         {
-            rooms[roomCount++] = end;
+            rooms[roomCount++] = end; // 불가능하다면 새 방 추가
         }
     }
     
